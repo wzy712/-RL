@@ -1,0 +1,20 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# --- uv / 虚拟环境 ---
+.venv/
+# 若因权限限制把 uv 缓存放进仓库（UV_CACHE_DIR=$PWD/.uv-cache）
+.uv-cache/
+
+# --- 训练产物 ---
+runs/
+checkpoints/
+*.pt
+*.pth
+
+# --- macOS ---
+.DS_Store

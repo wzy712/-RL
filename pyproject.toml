@@ -1,0 +1,54 @@
+[project]
+name = "gomoku-alphazero"
+version = "0.1.0"
+description = "五子棋 AlphaZero 风格自我对弈（MCTS + 独立价值网络）—— PyTorch + Gymnasium"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+license = { text = "MIT" }
+dependencies = [
+    # --- 深度学习 ---
+    # macOS(arm64) 的 PyPI 默认 wheel 已包含 MPS 后端；CPU 也开箱可用。
+    "torch>=2.4",
+    "numpy>=1.26",
+    # --- 强化学习环境接口（env.py 继承 gymnasium.Env）---
+    "gymnasium>=1.0",
+]
+
+[project.optional-dependencies]
+# 想用 `--render` 看 pygame 窗口时： uv sync --extra render
+render = ["pygame>=2.5"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[tool.uv]
+# 本项目是脚本型工程（env.py / alphazero.py / az_train.py），不作为包安装，
+# 因此不声明 [build-system]：uv 以 "virtual project" 方式管理依赖。
+package = false
+
+# ---------------------------------------------------------------------------
+# CUDA 用户（Linux / Windows）请取消下面注释，然后 `uv sync`：
+#
+# [[tool.uv.index]]
+# name = "pytorch-cu126"
+# url = "https://download.pytorch.org/whl/cu126"
+# explicit = true
+#
+# [tool.uv.sources]
+# torch = { index = "pytorch-cu126" }
+# ---------------------------------------------------------------------------
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
